@@ -22,27 +22,26 @@ function secure_remove() {
 		return 1
 	fi
 
-	if [[ ! -f $ARGS && ! -d $ARGS ]]; then
+	if [[ ! -f "$ARGS" && ! -d "$ARGS" ]]; then
 		echo "$ARGS is neither a file or directory.. aborting"
 		return 1
 	fi	       
 	
-	FILES=$(find $ARGS -type f;)
-	for f in $FILES
+	find "$ARGS" -type f -print0 | while IFS= read -r -d '' f; 
 	do
 		echo -n "file: $f ... "
-		f_size=$(stat $STAT_ARGS $f)
+		f_size=$(stat $STAT_ARGS "$f")
 		echo -n "zeroing-out ..."
-		dd if=/dev/zero of=$f bs=1 count=$f_size status='none'
+		dd if=/dev/zero of="$f" bs=1 count=$f_size status='none'
 		echo -n "randomizing-out ..."
-		dd if=/dev/random of=$f bs=1 count=$f_size status='none'
+		dd if=/dev/random of="$f" bs=1 count=$f_size status='none'
 		echo -n "zeroing-out ... "
-		dd if=/dev/zero of=$f bs=1 count=$f_size status='none'
+		dd if=/dev/zero of="$f" bs=1 count=$f_size status='none'
 		echo "deleting it"
-		rm -f $f
+		rm -f "$f"
 	done
 
-	rm -rf $ARGS
+	rm -rf "$ARGS"
 }
 
 alias secrm='secure_remove'
