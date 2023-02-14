@@ -13,13 +13,13 @@ function secure_remove() {
 	ARGS=$1
 	
 	UNAME_OUT=$(uname)
-	if [ $UNAME_OUT == 'Darwin' ]; then
+	if [[ $UNAME_OUT == 'Darwin' ]]; then
 		STAT_ARGS="-f %z"
-	elif [ $UNAME_OUT == 'Linux' ]; then
+	elif [[ $UNAME_OUT == 'Linux' ]]; then
 		STAT_ARGS="-c %s"
 	else
 		echo "this seems to be running on an unknown OS. Aborting"
-		return 11
+		return 1
 	fi
 
 	if [[ ! -f $ARGS && ! -d $ARGS ]]; then
