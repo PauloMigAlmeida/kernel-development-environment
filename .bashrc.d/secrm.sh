@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Apple removed the rm -P flag which writes 0x00, 0xFF and 0x00 before deleting the file
-# on new version of MacOS. I really liked that =/ Anyway, I simply didn't like the other
-# alternative versions out there so I decided to put together a script that does something
+# on new versions of MacOS. I really liked that =/ Anyway, I simply didn't like the other
+# alternatives out there so I decided to put together a script that does something
 # similar. It works on both Linux and MacOs.
 #
 # Usage:
