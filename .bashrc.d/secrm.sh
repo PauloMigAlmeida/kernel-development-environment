@@ -12,6 +12,11 @@
 function secure_remove() {
 	ARGS=$1
 	
+	if [[ ! -f "$ARGS" && ! -d "$ARGS" ]]; then
+		echo "$ARGS is neither a file or directory.. aborting"
+		return 1
+	fi
+	
 	UNAME_OUT=$(uname)
 	if [[ $UNAME_OUT == 'Darwin' ]]; then
 		STAT_ARGS="-f %z"
@@ -19,11 +24,6 @@ function secure_remove() {
 		STAT_ARGS="-c %s"
 	else
 		echo "this seems to be running on an unknown OS. Aborting"
-		return 1
-	fi
-
-	if [[ ! -f "$ARGS" && ! -d "$ARGS" ]]; then
-		echo "$ARGS is neither a file or directory.. aborting"
 		return 1
 	fi	       
 	
