@@ -1,7 +1,7 @@
 #!/bin/bash
 
 load_reproducible_kernel_env(){
-	export KBF="KBUILD_BUILD_TIMESTAMP=1970-01-01 KBUILD_BUILD_USER=user KBUILD_BUILD_HOST=host KBUILD_BUILD_VERSION=1"
+	export KBF="KBUILD_BUILD_TIMESTAMP=1970-01-02 KBUILD_BUILD_USER=user KBUILD_BUILD_HOST=host KBUILD_BUILD_VERSION=1"
 	export OUT=gcc
 	make $KBF O=$OUT allmodconfig
 	./scripts/config --file $OUT/.config \
