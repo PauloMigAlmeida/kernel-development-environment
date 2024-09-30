@@ -1,7 +1,12 @@
 #!/bin/bash
 
 load_reproducible_kernel_env(){
-	export KBF="KBUILD_BUILD_TIMESTAMP=1970-01-02 KBUILD_BUILD_USER=user KBUILD_BUILD_HOST=host KBUILD_BUILD_VERSION=1"
+	KBF="KBUILD_BUILD_TIMESTAMP=1980-01-01 KBUILD_BUILD_USER=user KBUILD_BUILD_HOST=host KBUILD_BUILD_VERSION=1"	
+	if [[ -n "$1" && -n "$2" ]]; then
+		KBF="${KBF} ARCH=$1 CROSS_COMPILE=$2"
+	fi
+	export KBF
+
 	export OUT=gcc
 	make $KBF O=$OUT allmodconfig
 	./scripts/config --file $OUT/.config \
