@@ -7,7 +7,24 @@ load_reproducible_kernel_env(){
 	fi
 	export KBF
 
-	export OUT=gcc
+	if [[ -n "$3" ]]; then
+		echo "output folder $3"
+		OUT=$3
+	else
+		echo "no output folder choosen, using gcc"
+		OUT=gcc
+	fi
+	
+	rm -rf gcc
+	export OUT
+
+	if [[ -n "$4" ]]; then
+	    	echo "running allmodconfig"
+		make $KBF O=$OUT allmodconfig
+	else
+		echo "running defconfig"
+		make $KBF O=$OUT defconfig
+	fi
 	make $KBF O=$OUT allmodconfig
 	./scripts/config --file $OUT/.config \
 	        -d GCOV_KERNEL -d KCOV -d GCC_PLUGINS -d IKHEADERS -d KASAN -d UBSAN \
